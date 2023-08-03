@@ -77,12 +77,24 @@ class AdminController extends Controller
             'marital_status' => $UpdateTeamMember['marital_status']
         ]);
 
-        //check if mail in system
+        //check if updated
         if(!$UpdateTeamMemberQuery){
             Alert::warning('Notification', 'Employee data was unable to be updated');
             return back();
         }else{
             Alert::success('Notification', 'Employee data updated successfully');
+            return redirect('/admin/teams');
+        }
+    }
+
+    //delete team member data
+    public function admin_delete_team(Request $request){
+        $DeleteTeamQuery = DB::table('users')->where('id', $request['team_id'])->delete();
+        if(!$DeleteTeamQuery){
+            Alert::warning('Notification', 'Employee data was unable to be deleted');
+            return back();
+        }else{
+            Alert::success('Notification', 'Employee data deleted successfully');
             return redirect('/admin/teams');
         }
     }

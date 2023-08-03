@@ -143,9 +143,10 @@
                                             <td>{{strtoupper($team->created_at)}}</td>
                                             <td>
                                                 <a class="btn btn-info" href="{{$team->id}}/edit-team"> <i class="fas fa-pen-square"></i> Edit</a>
-                                                <form action="admin/delete-team/{{$team->id}}" method="POST">
+                                                <form action="/admin/delete-team" method="POST">
                                                     @csrf
                                                     @method('DELETE')
+                                                    <input type="hidden" name="team_id" value="{{$team->id}}">
                                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                                 </form>
                                             </td>
