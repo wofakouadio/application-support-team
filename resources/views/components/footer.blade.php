@@ -41,7 +41,7 @@
         stateSave: true,
         searching: true,
         autoWidth: false,
-        paging: true,
+        paging: true
     });
 </script>
 

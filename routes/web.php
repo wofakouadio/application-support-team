@@ -22,6 +22,8 @@ Route::prefix("admin")->group(function(){
     Route::get('/dashboard', [AdminController::class, 'admin_dashboard']);
     Route::get('/teams', [AdminController::class, 'admin_teams']);
     Route::post('/new-team-member', [AdminController::class, 'admin_new_team_member']);
+    Route::get('/{team_id}/edit-team', [AdminController::class, 'admin_edit_team']);
+    Route::put('/update-team', [AdminController::class, 'admin_update_team']);
 });
 
 
