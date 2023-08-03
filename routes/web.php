@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,14 +18,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function (){
-   return view('admin/dashboard');
+Route::prefix("admin")->group(function(){
+    Route::get('/dashboard', [AdminController::class, 'admin_dashboard']);
+    Route::get('/teams', [AdminController::class, 'admin_teams']);
+    Route::post('/new-team-member', [AdminController::class, 'admin_new_team_member']);
 });
 
-Route::get("/teams", function (){
-   return view('admin/teams');
-});
 
-Route::get('/login', function (){
-    return view('auth/login');
-});
+
+//Route::get('/dashboard', function (){
+//   return view('admin/dashboard');
+//});
+//
+//Route::get("/teams", function (){
+//   return view('admin/teams');
+//});
+
+//Route::get('/login', function (){
+//    return view('auth/login');
+//});

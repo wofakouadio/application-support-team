@@ -32,3 +32,4 @@
         <div class="lds-pos"></div>
     </div>
 </div>
+@include('sweetalert::alert')

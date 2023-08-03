@@ -42,9 +42,6 @@
         searching: true,
         autoWidth: false,
         paging: true,
-        order: [
-            [1, 'asc']
-        ]
     });
 </script>
 

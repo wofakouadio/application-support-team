@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
-                        <form class="form-horizontal" action="/new-team-member" method="POST">
+                        <form class="form-horizontal" action="/admin/new-team-member" method="POST">
                             @csrf
                             <div class="card-body">
                                 <h4 class="card-title">New Team Member</h4>
@@ -58,18 +58,27 @@
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="fname" value="{{old('fname')}}">
                                     </div>
+                                    @error('fname')
+                                        <span class="text-danger">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="lname" value="{{old('lname')}}">
                                     </div>
+                                    @error('lname')
+                                        <span class="text-danger">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">Date of Birth</label>
                                     <div class="col-sm-9">
                                         <input type="date" class="form-control" name="dob" value="{{old('dob')}}">
                                     </div>
+                                    @error('dob')
+                                        <span class="text-danger">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">Gender</label>
@@ -80,23 +89,29 @@
                                             <option value="female">Female</option>
                                         </select>
                                     </div>
+                                    @error('gender')
+                                        <span class="text-danger">{{$message}}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">Marital Status</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="gender">
+                                        <select class="form-control" name="marital_status">
                                             <option value="">Choose</option>
                                             <option value="single">Single</option>
                                             <option value="married">Married</option>
                                             <option value="divorced">Divorced</option>
                                             <option value="widowed">Widowed</option>
                                         </select>
+                                        @error('marital_status')
+                                            <span class="text-danger">{{$message}}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="border-top">
                                 <div class="card-body">
-                                    <button type="button" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -109,24 +124,36 @@
                             <div class="table-responsive">
                                 <table id="zero_config" class="table table-striped table-bordered dataTable">
                                     <thead>
-                                    <tr role="row">
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
+                                        <tr role="row">
+                                            <th>Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Gender</th>
+                                            <th>Marital Status</th>
+                                            <th>Reg. Date</th>
+                                            <th>Action</th>
+                                        </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+                                    @foreach($teams as $team)
+                                        <tr>
+                                            <th>{{$team->fname}} {{$team->lname}}</th>
+                                            <th>{{$team->dob}}</th>
+                                            <th>{{strtoupper($team->gender)}}</th>
+                                            <th>{{strtoupper($team->marital_status)}}</th>
+                                            <th>{{strtoupper($team->created_at)}}</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
                                     <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th></tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Gender</th>
+                                            <th>Marital Status</th>
+                                            <th>Reg. Date</th>
+                                            <th>Action</th>
+                                        </tr>
                                     </tfoot>
                                 </table>
                             </div>
