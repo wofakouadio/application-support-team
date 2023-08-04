@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Teams;
+use App\Models\Tasks;
 use Illuminate\Http\Request;
 
-class TeamsController extends Controller
+class TasksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class TeamsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Teams $teams)
+    public function show(Tasks $teams)
     {
         //
     }
@@ -42,7 +42,7 @@ class TeamsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teams $teams)
+    public function edit(Tasks $teams)
     {
         //
     }
@@ -50,7 +50,7 @@ class TeamsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teams $teams)
+    public function update(Request $request, Tasks $teams)
     {
         //
     }
@@ -58,7 +58,7 @@ class TeamsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teams $teams)
+    public function destroy(Tasks $teams)
     {
         //
     }
