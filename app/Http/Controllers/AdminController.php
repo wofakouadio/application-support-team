@@ -18,7 +18,16 @@ class AdminController extends Controller
 
     //
     public function admin_dashboard(){
-        return view('admin.dashboard');
+        return view('admin.dashboard', [
+            'daily_count_activities' => Tasks::whereDate('created_at', date('Y-m-d'))->count(),
+            'daily_count_submitted' => Tasks::whereDate('created_at', date('Y-m-d'))->where('status', 0)->count(),
+            'daily_count_pending' => Tasks::whereDate('created_at', date('Y-m-d'))->where('status', 1)->count(),
+            'daily_count_done' => Tasks::whereDate('created_at', date('Y-m-d'))->where('status', 2)->count(),
+            'count_activities' => Tasks::all()->count(),
+            'count_submitted' => Tasks::where('status', 0)->count(),
+            'count_pending' => Tasks::where('status', 1)->count(),
+            'count_done' => Tasks::where('status', 2)->count()
+        ]);
     }
 
     public function admin_teams(){
