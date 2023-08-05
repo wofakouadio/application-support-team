@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description');
             $table->tinyInteger('status')->default(0);
+            $table->longText('remarks')->nullable();
             $table->timestamps();
         });
     }

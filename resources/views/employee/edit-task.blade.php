@@ -32,7 +32,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Teams</li>
+                                <li class="breadcrumb-item active" aria-current="page">Tasks/Activities</li>
                             </ol>
                         </nav>
                     </div>
@@ -46,123 +46,60 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <form class="form-horizontal" action="/admin/update-team" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-                                <h4 class="card-title">Update Team Member</h4>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="fname" value="{{old('fname', $team->fname)}}">
-                                        <input type="hidden" name="team_id" value="{{$team->id}}">
-                                    </div>
-                                    @error('fname')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group row">
-                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="lname" value="{{old('lname', $team->lname)}}">
-                                    </div>
-                                    @error('lname')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group row">
-                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Date of Birth</label>
-                                    <div class="col-sm-9">
-                                        <input type="date" class="form-control" name="dob" value="{{old('dob', $team->dob)}}">
-                                    </div>
-                                    @error('dob')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group row">
-                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Gender</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" name="gender">
-                                            <option value="">Choose</option>
-                                            <option value="male"
-                                                    @if($team->gender === 'male') selected="selected" @endif
-                                            >Male</option>
-                                            <option value="female"
-                                                    @if($team->gender === 'female') selected="selected" @endif
-                                            >Female</option>
-                                        </select>
-                                    </div>
-                                    @error('gender')
-                                        <span class="text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group row">
-                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Marital Status</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control" name="marital_status">
-                                            <option value="">Choose</option>
-                                            <option value="single" @if($team->marital_status === 'single') selected="selected" @endif>Single</option>
-                                            <option value="married" @if($team->marital_status === 'married') selected="selected" @endif>Married</option>
-                                            <option value="divorced" @if($team->marital_status === 'divorced') selected="selected" @endif>Divorced</option>
-                                            <option value="widowed" @if($team->marital_status === 'widowed') selected="selected" @endif>Widowed</option>
-                                        </select>
-                                        @error('marital_status')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-top">
-                                <div class="card-body">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title m-b-4">TableView</h5>
-                            <div class="table-responsive">
-                                <table id="zero_config" class="table table-striped table-bordered dataTable">
-                                    <thead>
-                                        <tr role="row">
-                                            <th>Name</th>
-                                            <th>Date of Birth</th>
-                                            <th>Gender</th>
-                                            <th>Marital Status</th>
-                                            <th>Reg. Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($teams as $team)
-                                        <tr>
-                                            <td>{{$team->fname}} {{$team->lname}}</td>
-                                            <td>{{$team->dob}}</td>
-                                            <td>{{strtoupper($team->gender)}}</td>
-                                            <td>{{strtoupper($team->marital_status)}}</td>
-                                            <td>{{strtoupper($team->created_at)}}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Date of Birth</th>
-                                            <th>Gender</th>
-                                            <th>Marital Status</th>
-                                            <th>Reg. Date</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+            <div class="card">
+                <form class="form-horizontal" action="/employee/tasks/update-task" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-body">
+                        <h4 class="card-title">Update Task</h4>
+                        <div class="form-group">
+                            <label for="fname" class="text-right control-label col-form-label">Title</label>
+                            <input type="text" class="form-control" name="name" value="{{old('name', $SingleTask->name)}}">
+                            <input type="hidden" name="task_id" value="{{$SingleTask->id}}">
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-right control-label col-form-label">Description</label>
+                            <textarea class="form-control" name="description" cols="10" rows="5">{{old('description', $SingleTask->description)}}</textarea>
+                            @error('description')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-right control-label col-form-label">Status</label>
+                            <select class="form-control" name="status">
+                                <option value="">Choose</option>
+                                <option value="1"
+                                        @if($SingleTask->status === 1)
+                                            selected = "selected"
+                                        @endif
+                                >PENDING</option>
+                                <option value="2"
+                                        @if($SingleTask->status === 2)
+                                            selected = "selected"
+                                    @endif
+                                >DONE</option>
+                            </select>
+                            @error('status')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="text-right control-label col-form-label">Remarks</label>
+                            <textarea class="form-control" name="remarks" cols="10" rows="5">{{old('remarks', $SingleTask->remarks)}}</textarea>
+                            @error('remarks')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
                     </div>
-                </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <!-- ============================================================== -->

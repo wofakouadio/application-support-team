@@ -24,16 +24,16 @@ class DefaultData extends Seeder
                 'password' => bcrypt('password'),
                 'user_type' => 1
             ],
-            [
-                'fname' => 'francis',
-                'lname' => 'bennett',
-                'dob' => date('1980-11-04'),
-                'gender' => 'male',
-                'marital_status' => 'divorced',
-                'email' => 'francisbennett@mail.com',
-                'password' => bcrypt('password'),
-                'user_type' => 0
-            ]
+//            [
+//                'fname' => 'francis',
+//                'lname' => 'bennett',
+//                'dob' => date('1980-11-04'),
+//                'gender' => 'male',
+//                'marital_status' => 'divorced',
+//                'email' => 'francisbennett@mail.com',
+//                'password' => bcrypt('password'),
+//                'user_type' => 0
+//            ]
         ];
 
         foreach ($users as $key => $user){
