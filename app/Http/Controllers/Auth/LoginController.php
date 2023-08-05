@@ -36,30 +36,32 @@ class LoginController extends Controller
      *
      * @return void
      */
-//    public function __construct()
-//    {
-//        $this->middleware('guest')->except('logout');
-//    }
 
+//    login script
     public function login(Request $request){
+//        validate login data
         $LoginData = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
+//if user is authenticated then let's get user type
         if(Auth::attempt($LoginData)){
             $role = Auth::user()->user_type;
+//            check user type
             switch ($role){
+//                when user type is 1
                 case 1:
                     $request->session()->regenerate();
                     Alert::success('Notification', 'Login successfully as Admin');
                     return redirect()->route('admin.dashboard');
                     break;
+//                when user type is 0
                 case 0:
                     $request->session()->regenerate();
                     Alert::success('Notification', 'Login successfully as Employee');
                     return redirect()->route('employee.dashboard');
                     break;
+//                    when user type does not much any session get destroy and redirect the user to the login
                 default:
                     Auth::logout();
                     Alert::error('Notification', 'Login wrong');
