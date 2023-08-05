@@ -12,6 +12,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/logo.png')}}">
     <title>Home | AST</title>
     <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/libs/quill/dist/quill.snow.css')}}">
     <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

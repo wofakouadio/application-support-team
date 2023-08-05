@@ -56,9 +56,19 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{asset('images/logo.png')}}" alt="user" class="rounded-circle" width="31"></a>
+                        <img src="{{asset('images/logo.png')}}" alt="user" class="rounded-circle" width="31"> {{Auth::user()->fname}} {{Auth::user()->lname}}</a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                        <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-danger">Logout</a></div>
+                        <div class="p-l-30 p-10">
+                            <form class="text-center" action="{{route('auth.logout')}}" method="post">
+                                @csrf
+                                <button type="submit" class="waves-effect waves-teal">
+                                    <a class="btn btn-danger waves-effect waves-dark">
+                                        Logout
+                                    </a>
+                                </button>
+                            </form>
+{{--                            <a href="{{route('auth.logout')}}" class="btn btn-danger">Logout</a>--}}
+                        </div>
                     </div>
                 </li>
                 <!-- ============================================================== -->

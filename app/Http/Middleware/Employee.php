@@ -17,14 +17,14 @@ class Employee
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::check()){
-            return redirect()->route('auth.login');
+            return redirect('/login');
         }
         $user = Auth::user();
-        if($user->user_type === 1){
+        if($user->user_type === 0){
             return $next($request);
         }
-        if($user->user_type === 0){
-            return redirect()->route('employee.dashboard');
+        if($user->user_type === 1){
+            return redirect()->route('admin.dashboard');
         }
     }
 }

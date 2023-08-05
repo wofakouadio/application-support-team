@@ -51,7 +51,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected function user_type(){
-        return new Attribute(get: fn ($value) =>  ["employee", "admin"][$value]);
+    public function tasks(){
+        return $this->hasMany(Tasks::class, 'user_id');
     }
+
 }

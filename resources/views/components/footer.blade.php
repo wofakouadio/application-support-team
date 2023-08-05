@@ -26,6 +26,7 @@
 <script src="{{asset('assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
 <script src="{{asset('dist/js/pages/chart/chart-page-init.js')}}"></script>
 <script src="{{asset('assets/extra-libs/DataTables/datatables.min.js')}}"></script>
+<script src="{{asset('assets/libs/quill/dist/quill.min.js')}}"></script>
 <script>
     /****************************************
      *       Basic Table                   *
@@ -42,6 +43,10 @@
         searching: true,
         autoWidth: false,
         paging: true
+    });
+
+    var quill = new Quill('#editor', {
+        theme: 'snow'
     });
 </script>
 

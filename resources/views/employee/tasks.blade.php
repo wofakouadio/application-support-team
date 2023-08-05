@@ -49,25 +49,22 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
-                        <form class="form-horizontal" action="/employee/new-task" method="POST">
+                        <form class="form-group" action="/employee/tasks/new-task" method="POST">
                             @csrf
                             <div class="card-body">
                                 <h4 class="card-title">New Task</h4>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Title</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="task_title" value="{{old('task_title')}}">
-                                    </div>
-                                    @error('task_title')
+                                <div class="form-group">
+                                    <label for="fname" class="text-right control-label col-form-label">Title</label>
+                                    <input type="text" class="form-control" name="name" value="{{old('name')}}">
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                    @error('name')
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group row">
-                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Description</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" name="task_description" cols="10" rows="5">{{old('task_description')}}</textarea>
-                                    </div>
-                                    @error('task_description')
+                                <div class="form-group">
+                                    <label for="lname" class="text-right control-label col-form-label">Description</label>
+                                    <textarea class="form-control" name="description" cols="10" rows="5" id="editor">{{old('description')}}</textarea>
+                                    @error('description')
                                         <span class="text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
@@ -89,40 +86,52 @@
                                     <thead>
                                         <tr role="row">
                                             <th>Name</th>
-                                            <th>Date of Birth</th>
-                                            <th>Gender</th>
-                                            <th>Marital Status</th>
-                                            <th>Reg. Date</th>
+                                            <th>Creation Date</th>
+                                            <th>Update Date</th>
+                                            <th>User</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-{{--                                    @foreach($teams as $team)--}}
-{{--                                        <tr>--}}
-{{--                                            <td>{{$team->fname}} {{$team->lname}}</td>--}}
-{{--                                            <td>{{$team->dob}}</td>--}}
-{{--                                            <td>{{strtoupper($team->gender)}}</td>--}}
-{{--                                            <td>{{strtoupper($team->marital_status)}}</td>--}}
-{{--                                            <td>{{strtoupper($team->created_at)}}</td>--}}
-{{--                                            <td>--}}
-{{--                                                <a class="btn btn-info" href="{{$team->id}}/edit-team"> <i class="fas fa-pen-square"></i> Edit</a>--}}
-{{--                                                <form action="/admin/delete-team" method="POST">--}}
-{{--                                                    @csrf--}}
-{{--                                                    @method('DELETE')--}}
-{{--                                                    <input type="hidden" name="team_id" value="{{$team->id}}">--}}
-{{--                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>--}}
-{{--                                                </form>--}}
-{{--                                            </td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
+                                    @foreach($tasks as $task)
+                                        <tr>
+                                            <td>{{$task->name}}</td>
+                                            <td>{{$task->created_at}}</td>
+                                            <td>{{$task->updated_at}}</td>
+                                            <td>{{$task->user->fname}} {{$task->user->lname}}</td>
+                                            <td>
+                                                @switch($task->status)
+                                                    @case(1)
+                                                        <span class="badge bg-warning text-white text-uppercase">pending</span>
+                                                        @break
+                                                    @case(2)
+                                                        <span class="badge bg-success text-white text-uppercase">done</span>
+                                                        @break
+                                                    @default
+                                                        <span class="badge bg-primary text-white text-uppercase">submitted</span>
+                                                        @break
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-info" href="/employee/tasks/{{$task->id}}/edit-task"> <i class="fas fa-pen-square"></i> Edit</a>
+                                                <form action="/employee/tasks/delete-team" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="team_id" value="{{$task->id}}">
+                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Date of Birth</th>
-                                            <th>Gender</th>
-                                            <th>Marital Status</th>
-                                            <th>Reg. Date</th>
+                                            <th>Creation Date</th>
+                                            <th>Update Date</th>
+                                            <th>User</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
