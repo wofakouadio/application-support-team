@@ -115,10 +115,10 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-info" href="/employee/tasks/{{$task->id}}/edit-task"> <i class="fas fa-pen-square"></i> Edit</a>
-                                                <form action="/employee/tasks/delete-team" method="POST">
+                                                <form action="/employee/tasks/delete-task" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <input type="hidden" name="team_id" value="{{$task->id}}">
+                                                    <input type="hidden" name="task_id" value="{{$task->id}}">
                                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                                 </form>
                                             </td>

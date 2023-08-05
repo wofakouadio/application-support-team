@@ -55,7 +55,7 @@ class TasksController extends Controller
         return view(
             'employee.edit-task',
             [
-                'SingleTask' => DB::table('tasks')->select('id', 'name', 'description', 'status')->where('id', $request['task_id'])->first(),
+                'SingleTask' => DB::table('tasks')->select('id', 'name', 'description', 'status', 'remarks')->where('id', $request['task_id'])->first(),
             ]
         );
     }
@@ -63,16 +63,43 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tasks $tasks)
+    public function update(Request $request)
     {
-        //
+        $UpdateTask = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'remarks' => 'required'
+        ]);
+
+        try {
+            DB::table('tasks')->where('id', $request['task_id'])->update([
+                'name' => $UpdateTask['name'],
+                'description' => $UpdateTask['description'],
+                'status' => $UpdateTask['status'],
+                'remarks' => $UpdateTask['remarks'],
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+            Alert::success('Notification', 'Activity/Task updated successfully.');
+            return redirect('/employee/tasks');
+        }catch (\Exception $e){
+            Alert::danger('Notification', 'Activity/Task creation update failed.'.$e->getMessage());
+            return back();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tasks $tasks)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            DB::table('tasks')->where('id', $request['task_id'])->delete();
+            Alert::success('Notification', 'Activity/Task deleted successfully.');
+            return redirect('/employee/tasks');
+        }catch (\Exception $e){
+            Alert::danger('Notification', 'Activity/Task creation delete failed.'.$e->getMessage());
+            return back();
+        }
     }
 }

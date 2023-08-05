@@ -40,6 +40,8 @@ Route::middleware('employee')->prefix('employee')->group(function(){
     Route::get('/tasks', [UserController::class, 'employee_tasks']);
     Route::post('/tasks/new-task', [TasksController::class, 'store']);
     Route::get('/tasks/{task_id}/edit-task', [TasksController::class, 'edit']);
+    Route::put('/tasks/update-task', [TasksController::class, 'update']);
+    Route::delete('/tasks/delete-task', [TasksController::class, 'destroy']);
 });
 
 
