@@ -40,14 +40,6 @@ class TasksController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Tasks $tasks)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Request $request)

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tasks;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 class AdminController extends Controller
 {
@@ -20,7 +23,7 @@ class AdminController extends Controller
 
     public function admin_teams(){
         return view('admin.teams',[
-            'teams' => User::latest()->get()
+            'teams' => User::where('user_type', 0)->latest()->get()
         ]);
     }
     //store new team/user
@@ -104,5 +107,35 @@ class AdminController extends Controller
         }
     }
 
+    public function show_activities(){
+        return view('/admin/tasks-view',
+        [
+            'tasks' => Tasks::whereDate('created_at', date('Y-m-d'))->get()
+        ]);
+    }
 
+    public function show_activity(Request $request){
+        return view('/admin/task',
+            [
+                'task' => Tasks::find($request['task_id'])
+            ]);
+    }
+
+    public function show_report_ui(){
+        return view('/admin/reports', ['reports' => '']);
+    }
+
+    public function get_tasks_reports(Request $request){
+        $reportDate = $request->validate([
+            'starting-date' => 'required',
+            'ending-date' => 'required'
+        ]);
+
+        $start_date = Carbon::createFromFormat('Y-m-d', $reportDate['starting-date']);
+        $end_date = Carbon::createFromFormat('Y-m-d', $reportDate['ending-date']);
+        $reports = '';
+        $reports = Tasks::whereBetween('created_at', [$start_date, $end_date])->get();
+
+        return view('admin/reports', ['reports' => $reports]);
+    }
 }

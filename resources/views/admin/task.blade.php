@@ -13,7 +13,7 @@
     <!-- ============================================================== -->
     <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <x-menu-employee/>
+    <x-menu/>
     <!-- ============================================================== -->
     <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
@@ -47,57 +47,46 @@
         <!-- ============================================================== -->
         <div class="container-fluid">
             <div class="card">
-                <form class="form-horizontal" action="/employee/tasks/update-task" method="POST">
+                <form class="form-horizontal">
                     @csrf
-                    @method('PUT')
                     <div class="card-body">
-                        <h4 class="card-title">Update Task</h4>
+                        <h4 class="card-title">Task / Activity Information</h4>
                         <div class="form-group">
                             <label for="fname" class="text-right control-label col-form-label">Title</label>
-                            <input type="text" class="form-control" name="name" value="{{old('name', $SingleTask->name)}}">
-                            <input type="hidden" name="task_id" value="{{$SingleTask->id}}">
-                            @error('name')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <input type="text" class="form-control" name="name" value="{{$task->name}}" readonly>
                         </div>
                         <div class="form-group">
                             <label class="text-right control-label col-form-label">Description</label>
-                            <textarea class="form-control" name="description" cols="10" rows="5">{{old('description', $SingleTask->description)}}</textarea>
-                            @error('description')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <textarea class="form-control" name="description" cols="10" rows="5" readonly>{{$task->description}}</textarea>
                         </div>
                         <div class="form-group">
                             <label class="text-right control-label col-form-label">Status</label>
-                            <select class="form-control" name="status">
-                                <option value="">Choose</option>
-                                <option value="1"
-                                        @if($SingleTask->status === 1)
-                                            selected = "selected"
-                                        @endif
-                                >PENDING</option>
-                                <option value="2"
-                                        @if($SingleTask->status === 2)
-                                            selected = "selected"
-                                    @endif
-                                >DONE</option>
-                            </select>
-                            @error('status')
-                                <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            @switch($task->status)
+                                @case(1)
+                                    <input type="text" class="form-control" value="{{('PENDING')}}" readonly>
+                                    @break
+                                @case(2)
+                                    <input type="text" class="form-control" value="{{('DONE')}}" readonly>
+                                    @break
+                                @default
+                                    <input type="text" class="form-control" value="{{('SUBMITTED')}}" readonly>
+                                    @break
+                            @endswitch
                         </div>
-                        <div class="form-group">
-                            <label class="text-right control-label col-form-label">Remarks</label>
-                            <textarea class="form-control" name="remarks" cols="10" rows="5">{{old('remarks', $SingleTask->remarks)}}</textarea>
-                            @error('remarks')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="border-top">
-                        <div class="card-body">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
+                        @unless ($task->created_at->eq($task->updated_at))
+                            <div class="form-group">
+                                <label for="fname" class="text-right control-label col-form-label">Personnel</label>
+                                <input type="text" class="form-control" name="name" value="{{$task->user->fname. ' ' .$task->user->lname}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-right control-label col-form-label">Remarks</label>
+                                <textarea class="form-control" name="remarks" cols="10" rows="5" readonly>{{$task->remarks}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="fname" class="text-right control-label col-form-label">Activity Timestamp</label>
+                                <input type="text" class="form-control" name="name" value="{{$task->updated_at->format('j M Y, g:i a') . ' edited'}}" readonly>
+                            </div>
+                        @endunless
                     </div>
                 </form>
             </div>

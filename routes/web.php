@@ -33,6 +33,10 @@ Route::middleware('admin')->prefix("admin")->group(function(){
     Route::get('/{team_id}/edit-team', [AdminController::class, 'admin_edit_team']);
     Route::put('/update-team', [AdminController::class, 'admin_update_team']);
     Route::delete('/delete-team', [AdminController::class, 'admin_delete_team']);
+    Route::get('/daily-tasks', [AdminController::class, 'show_activities']);
+    Route::get('/task/{task_id}', [AdminController::class, 'show_activity']);
+    Route::get('/tasks-reports', [AdminController::class, 'show_report_ui']);
+    Route::post('/tasks-reports', [AdminController::class, 'get_tasks_reports']);
 });
 
 Route::middleware('employee')->prefix('employee')->group(function(){
